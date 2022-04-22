@@ -16,8 +16,8 @@ http.createServer(app).listen(80, ()=>{
 https
   .createServer(
     {
-      key: fs.readFileSync("/etc/letsencrypt/live/block4vars.com/privkey.pem"),
-      cert: fs.readFileSync("/etc/letsencrypt/live/block4vars.com/fullchain.pem"),
+      key: fs.readFileSync(__dirname + "/etc/letsencrypt/live/block4vars.com/privkey.pem"),
+      cert: fs.readFileSync(__dirname +"/etc/letsencrypt/live/block4vars.com/fullchain.pem"),
     },
     app
   )
