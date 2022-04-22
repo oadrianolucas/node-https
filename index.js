@@ -3,6 +3,11 @@ const https = require('https')
 const fs = require("fs");
 const express = require("express");
 const app = express();
+
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+
 /*
 http.createServer(app).listen(3000, ()=>{
     console.log('Está rodando na porta 3000')
@@ -11,8 +16,8 @@ http.createServer(app).listen(3000, ()=>{
 https
   .createServer(
     {
-      key: fs.readFileSync("key.pem"),
-      cert: fs.readFileSync("cert.pem"),
+      key: fs.readFileSync("keys/key.pem"),
+      cert: fs.readFileSync("keys/cert.pem"),
     },
     app
   )
@@ -21,7 +26,7 @@ https
   });
 
 app.get('/',(req, res)=>{
-    res.send('Olá, sou uma aplicação em node.')
+    res.render('index.html')
 })
 
 module.exports = app

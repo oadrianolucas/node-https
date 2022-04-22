@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn-audio">▶️ Iniciar</button>  
+    <div class="audios"></div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $(function () {
+        let mediaRecorder
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(
+            (stream) => {
+            mediaRecorder = new MediaRecorder(stream)
+            let chunks = []
+            mediaRecorder.ondataavailable = (data) => {
+                chunks.push(data.data)
+            }
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(chunks, { type: "audio/ogg; code=opus" })
+                const reader = new window.FileReader()
+                reader.readAsDataURL(blob)
+                reader.onloadend = () => {
+                const audio = document.createElement("audio")
+                audio.src = reader.result
+                audio.controls = true
+                $(".audios").append(audio)
+                console.log(reader.result)
+                }
+            }
+            },
+            (err) => {
+            alert("Você deve permitir o audio")
+            }
+        )
+        $("#btn-audio").click(function () {
+            if ($(this).text() == "▶️ Iniciar") {
+            mediaRecorder.start()
+            $(this).text("| | Parar")
+            } else {
+            mediaRecorder.stop()
+            $(this).text("▶️ Iniciar")
+            }
+        })
+        })
+    </script>
+</body>
+</html>
