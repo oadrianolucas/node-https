@@ -8,11 +8,11 @@ app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-/*
-http.createServer(app).listen(3000, ()=>{
-    console.log('Está rodando na porta 3000')
+
+http.createServer(app).listen(80, ()=>{
+    console.log('Está rodando na porta 80')
 });
-*/
+/*
 https
   .createServer(
     {
@@ -21,9 +21,10 @@ https
     },
     app
   )
-  .listen(4000, () => {
-    console.log("Está rodando na porta 4000");
+  .listen(80, () => {
+    console.log("Está rodando na porta 80");
   });
+*/
 
 app.get('/',(req, res)=>{
     res.render('index.html')
